@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ioasys.italo.appempresas.data.model.Post.SignIn;
@@ -22,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button entrar;
     private EditText email;
     private EditText senha;
+    private TextView usuarioOuSenhaInvalidos;
     private APIService mAPIService;
 
     @Override
@@ -29,44 +31,52 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        entrar = findViewById(R.id.loginActivity_entrar_button);
-        email = findViewById(R.id.loginActivity_email_editText);
-        senha = findViewById(R.id.loginActivity_senha_editText);
+        encontrandoViewsPorId();
 
         mAPIService = ApiUtils.getAPIService();
 
         entrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                usuarioOuSenhaInvalidos.setVisibility(View.INVISIBLE);
                 String emailDigitado = email.getText().toString();
                 String senhaDigitada = senha.getText().toString();
 
-                if(senhaDigitada.isEmpty()){
-                    senha.setError("Campo de senha está vazio");
-                }
+                validaSenha(senhaDigitada);
 
-                if(emailDigitado.isEmpty()){
-                    email.setError("Campo de email está vazio");
-                } else {
-
-                    if(isEmail(emailDigitado)){
-                        //funcionamento
-              //          Toast.makeText(getApplicationContext(),"cai aqui",Toast.LENGTH_SHORT).show();
-                        logar("oi","ola");
-
-
-
-                        //teste abaixo
-
-
-                    } else {
-                        email.setError("Digite um endereço de email válido");
-                    }
+                if (validaEmail(emailDigitado)){
+                    logar(emailDigitado,senhaDigitada);
                 }
             }
         });
 
+    }
+
+    private boolean validaEmail(String emailDigitado) {
+        if(emailDigitado.isEmpty()){
+            email.setError("Campo de email está vazio");
+        } else {
+
+            if(isEmail(emailDigitado)){
+                return true;
+            } else {
+                email.setError("Digite um endereço de email válido");
+            }
+        }
+        return false;
+    }
+
+    private void validaSenha(String senhaDigitada) {
+        if(senhaDigitada.isEmpty()){
+            senha.setError("Campo de senha está vazio");
+        }
+    }
+
+    private void encontrandoViewsPorId() {
+        entrar = findViewById(R.id.loginActivity_entrar_button);
+        email = findViewById(R.id.loginActivity_email_editText);
+        senha = findViewById(R.id.loginActivity_senha_editText);
+        usuarioOuSenhaInvalidos = findViewById(R.id.loginActivity_emailsenhainvalidos_textView);
     }
 
     private boolean isEmail(String email) {
@@ -80,14 +90,22 @@ public class LoginActivity extends AppCompatActivity {
         mAPIService.logar(email, senha).enqueue(new Callback<SignIn>() {
             @Override
             public void onResponse(Call<SignIn> call, Response<SignIn> response) {
-            //    if(response.isSuccessful()) {
-           //         Toast.makeText(getApplicationContext(),response.body().toString(),Toast.LENGTH_SHORT).show();
-          //      }
+
+                if(response.isSuccessful()) {
+                    String uid,client,acess_token;
+                    uid = response.headers().get("uid").toString();
+                    client = response.headers().get("client").toString();
+                    acess_token = response.headers().get("access-token").toString();
+                    Toast.makeText(getApplicationContext(),"Funcionou",Toast.LENGTH_SHORT).show();
+                    //exibirEmpresas(client,uid,acess_token,"Bar");
+                } else {
+                    usuarioOuSenhaInvalidos.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
             public void onFailure(Call<SignIn> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),"deu ruim",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Falha na Rede",Toast.LENGTH_LONG).show();
             }
         });
     }
