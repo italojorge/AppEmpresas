@@ -1,14 +1,13 @@
-package com.ioasys.italo.appempresas.data.remote;
+package com.ioasys.italo.appempresas.RetrofitResources.remote;
 
-import com.ioasys.italo.appempresas.data.model.Get.EnterpriseIndex;
-import com.ioasys.italo.appempresas.data.model.Post.SignIn;
+import com.ioasys.italo.appempresas.RetrofitResources.model.Get.EnterpriseIndex;
+import com.ioasys.italo.appempresas.RetrofitResources.model.Post.SignIn;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface APIService {

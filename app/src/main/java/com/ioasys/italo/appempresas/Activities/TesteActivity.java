@@ -1,14 +1,15 @@
-package com.ioasys.italo.appempresas;
+package com.ioasys.italo.appempresas.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.ioasys.italo.appempresas.data.model.Get.EnterpriseIndex;
-import com.ioasys.italo.appempresas.data.model.Get.Enterprise;
-import com.ioasys.italo.appempresas.data.model.Post.SignIn;
-import com.ioasys.italo.appempresas.data.remote.APIService;
-import com.ioasys.italo.appempresas.data.remote.ApiUtils;
+import com.ioasys.italo.appempresas.R;
+import com.ioasys.italo.appempresas.RetrofitResources.model.Get.EnterpriseIndex;
+import com.ioasys.italo.appempresas.RetrofitResources.model.Get.Enterprise;
+import com.ioasys.italo.appempresas.RetrofitResources.model.Post.SignIn;
+import com.ioasys.italo.appempresas.RetrofitResources.remote.APIService;
+import com.ioasys.italo.appempresas.RetrofitResources.remote.ApiUtils;
 
 import java.util.List;
 
@@ -71,7 +72,7 @@ public class TesteActivity extends AppCompatActivity {
         mAPIService.exibirEmpresas(uid,acess_token,client,search).enqueue(new Callback<EnterpriseIndex>() {
             @Override
             public void onResponse(Call<EnterpriseIndex> call, Response<EnterpriseIndex> response) {
-
+//usarFinish no terceiro layout
                 if(response.isSuccessful()) {
                     List<Enterprise> lista = response.body().getEnterprises();
                     for (Enterprise teste:lista){

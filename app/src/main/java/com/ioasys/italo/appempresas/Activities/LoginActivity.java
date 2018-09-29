@@ -1,5 +1,6 @@
-package com.ioasys.italo.appempresas;
+package com.ioasys.italo.appempresas.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,9 +9,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ioasys.italo.appempresas.data.model.Post.SignIn;
-import com.ioasys.italo.appempresas.data.remote.APIService;
-import com.ioasys.italo.appempresas.data.remote.ApiUtils;
+import com.ioasys.italo.appempresas.R;
+import com.ioasys.italo.appempresas.RetrofitResources.model.Post.SignIn;
+import com.ioasys.italo.appempresas.RetrofitResources.remote.APIService;
+import com.ioasys.italo.appempresas.RetrofitResources.remote.ApiUtils;
 
 import java.util.regex.Pattern;
 
@@ -96,8 +98,12 @@ public class LoginActivity extends AppCompatActivity {
                     uid = response.headers().get("uid").toString();
                     client = response.headers().get("client").toString();
                     acess_token = response.headers().get("access-token").toString();
-                    Toast.makeText(getApplicationContext(),"Funcionou",Toast.LENGTH_SHORT).show();
-                    //exibirEmpresas(client,uid,acess_token,"Bar");
+
+                    Intent intent = new Intent(getApplicationContext(),PesquisarActivity.class);
+                    intent.putExtra("uid",response.headers().get("uid").toString());
+                    intent.putExtra("client",response.headers().get("client").toString());
+                    intent.putExtra("acess-token",response.headers().get("access-token").toString());
+                    startActivity(intent);
                 } else {
                     usuarioOuSenhaInvalidos.setVisibility(View.VISIBLE);
                 }

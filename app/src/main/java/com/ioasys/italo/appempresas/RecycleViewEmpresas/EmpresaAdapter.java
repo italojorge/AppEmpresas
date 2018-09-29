@@ -1,4 +1,4 @@
-package com.ioasys.italo.appempresas.controle;
+package com.ioasys.italo.appempresas.RecycleViewEmpresas;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ioasys.italo.appempresas.R;
-import com.ioasys.italo.appempresas.entidades.Empresa;
 
 import java.util.ArrayList;
 

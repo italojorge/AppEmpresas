@@ -1,4 +1,4 @@
-package com.ioasys.italo.appempresas.data.model.Post;
+package com.ioasys.italo.appempresas.RetrofitResources.model.Post;
 
     import com.google.gson.annotations.Expose;
     import com.google.gson.annotations.SerializedName;

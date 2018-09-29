@@ -1,4 +1,4 @@
-package com.ioasys.italo.appempresas.data.remote;
+package com.ioasys.italo.appempresas.RetrofitResources.remote;
 
 public class ApiUtils {
 

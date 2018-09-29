@@ -1,4 +1,4 @@
-package com.ioasys.italo.appempresas;
+package com.ioasys.italo.appempresas.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,25 +8,35 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.widget.Toast;
 
-import com.ioasys.italo.appempresas.controle.EmpresaAdapter;
-import com.ioasys.italo.appempresas.entidades.Empresa;
+import com.ioasys.italo.appempresas.R;
+import com.ioasys.italo.appempresas.RecycleViewEmpresas.EmpresaAdapter;
+import com.ioasys.italo.appempresas.RecycleViewEmpresas.Empresa;
 
 import java.util.ArrayList;
 
 public class PesquisarActivity extends AppCompatActivity {
 
     RecyclerView mRecyclerView;
-
     private EmpresaAdapter mAdapter;
+    private String uid,client,access_token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pesquisar);
-        Toolbar toolbar = findViewById(R.id.wld_toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle("");
+
+        configuracoesToolBar();
+
+        Bundle tokens = getIntent().getExtras();
+
+        if(tokens != null){
+            uid = tokens.getString("uid");
+            client = tokens.getString("client");
+            access_token = tokens.getString("acess-token");
+        }
+        //deu bom até aqui
 
         mRecyclerView = findViewById(R.id.activityPesquisar_recycleView);
 
@@ -52,6 +62,13 @@ public class PesquisarActivity extends AppCompatActivity {
         empresas.add(empresa9);
         setupRecycler(empresas);
 
+
+    }
+
+    private void configuracoesToolBar() {
+        Toolbar toolbar = findViewById(R.id.wld_toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle("");
     }
 
     @Override

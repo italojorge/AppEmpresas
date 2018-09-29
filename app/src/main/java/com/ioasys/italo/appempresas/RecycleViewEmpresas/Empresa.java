@@ -1,4 +1,4 @@
-package com.ioasys.italo.appempresas.entidades;
+package com.ioasys.italo.appempresas.RecycleViewEmpresas;
 
 import android.widget.ImageView;
 
