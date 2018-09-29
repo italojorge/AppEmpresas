@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/listItem_empresa_imageView"
+        android:layout_width="140dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_report_image"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/listItem_nomeEmpresa_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Empresa1"
+        android:textColor="#1a0e49"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/listItem_empresa_imageView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/listItem_negocio_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Negócio"
+        android:textColor="#8d8c8c"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/listItem_nomeEmpresa_textView"
+        app:layout_constraintTop_toBottomOf="@+id/listItem_nomeEmpresa_textView" />
+
+    <TextView
+        android:id="@+id/listItem_localidade_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Brasil"
+        android:textColor="#8d8c8c"
+        app:layout_constraintStart_toStartOf="@+id/listItem_nomeEmpresa_textView"
+        app:layout_constraintTop_toBottomOf="@+id/listItem_negocio_textView" />
+
+</android.support.constraint.ConstraintLayout>
