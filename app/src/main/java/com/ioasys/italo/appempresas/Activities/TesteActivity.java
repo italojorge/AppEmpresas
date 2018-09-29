@@ -3,6 +3,7 @@ package com.ioasys.italo.appempresas.Activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ioasys.italo.appempresas.R;
 import com.ioasys.italo.appempresas.RetrofitResources.model.Get.EnterpriseIndex;
@@ -50,7 +51,7 @@ public class TesteActivity extends AppCompatActivity {
                     client = response.headers().get("client").toString();
                     acess_token = response.headers().get("access-token").toString();
 
-                    exibirEmpresas(client,uid,acess_token,"Bar");
+                    exibirEmpresas(client,uid,acess_token,"zod");
                 } else {
                     resultado.setText("Resposta deu ruim");
                 }
@@ -75,12 +76,19 @@ public class TesteActivity extends AppCompatActivity {
 //usarFinish no terceiro layout
                 if(response.isSuccessful()) {
                     List<Enterprise> lista = response.body().getEnterprises();
-                    for (Enterprise teste:lista){
-                        resultado.setText(
-                              "nome: " + teste.getEnterpriseName() + "\n" +
-                              "país: " + teste.getCountry()
 
-                        );
+                    if (!lista.isEmpty()){
+                        for (Enterprise teste:lista){
+
+                            resultado.setText(
+                                  "nome: " + teste.getEnterpriseName() + "\n" +
+                                  "país: " + teste.getCountry()+ "\n" +
+                                          "negocio: " + teste.getEnterpriseType().getEnterpriseTypeName()
+
+                            );
+                        }
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Lista Vazia",Toast.LENGTH_SHORT).show();
                     }
 
                 } else {

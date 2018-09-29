@@ -8,19 +8,44 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.ioasys.italo.appempresas.R;
-import com.ioasys.italo.appempresas.RecycleViewEmpresas.EmpresaAdapter;
 import com.ioasys.italo.appempresas.RecycleViewEmpresas.Empresa;
+import com.ioasys.italo.appempresas.RecycleViewEmpresas.EmpresaAdapter;
+import com.ioasys.italo.appempresas.RetrofitResources.model.Get.Enterprise;
+import com.ioasys.italo.appempresas.RetrofitResources.model.Get.EnterpriseIndex;
+import com.ioasys.italo.appempresas.RetrofitResources.remote.APIService;
+import com.ioasys.italo.appempresas.RetrofitResources.remote.ApiUtils;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PesquisarActivity extends AppCompatActivity {
 
-    RecyclerView mRecyclerView;
+    private APIService mAPIService;
     private EmpresaAdapter mAdapter;
-    private String uid,client,access_token;
+    private String mUid,mClient,mAccess_token, mSeach;
+
+    private RecyclerView mRecyclerView;
+    private SearchView mSearchView;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //deu bom até aqui
+
+        //exibirEmpresasDoServidor("UMB_2kzgXo9D2BvmbOzQNw", "testeapple@ioasys.com.br", "yK4ZwbuNVlhtw4VfXhCn6Q", query);
+        exibirEmpresasDoServidor(mClient,mUid,mAccess_token,"Bar");
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,41 +53,15 @@ public class PesquisarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pesquisar);
 
         configuracoesToolBar();
-
+        mAPIService = ApiUtils.getAPIService();
         Bundle tokens = getIntent().getExtras();
-
-        if(tokens != null){
-            uid = tokens.getString("uid");
-            client = tokens.getString("client");
-            access_token = tokens.getString("acess-token");
-        }
-        //deu bom até aqui
-
         mRecyclerView = findViewById(R.id.activityPesquisar_recycleView);
 
-        Empresa empresa1= new Empresa("Empresa1","vendas","brasil");
-        Empresa empresa2 = new Empresa("Empresa2","cerveza","brasil");
-        Empresa empresa3 = new Empresa("Empresa3","dorgas","brasil");
-        Empresa empresa4 = new Empresa("Empresa4","dorgas","brasil");
-        Empresa empresa5 = new Empresa("Empresa5","dorgas","brasil");
-        Empresa empresa6 = new Empresa("Empresa6","dorgas","brasil");
-        Empresa empresa7 = new Empresa("Empresa7","dorgas","brasil");
-        Empresa empresa8 = new Empresa("Empresa8","dorgas","brasil");
-        Empresa empresa9 = new Empresa("Empresa9","dorgas","brasil");
-
-        ArrayList<Empresa> empresas = new ArrayList<Empresa>();
-        empresas.add(empresa1);
-        empresas.add(empresa2);
-        empresas.add(empresa3);
-        empresas.add(empresa4);
-        empresas.add(empresa5);
-        empresas.add(empresa6);
-        empresas.add(empresa7);
-        empresas.add(empresa8);
-        empresas.add(empresa9);
-        setupRecycler(empresas);
-
-
+        if(tokens != null){
+            mUid = tokens.getString("uid");
+            mClient = tokens.getString("client");
+            mAccess_token = tokens.getString("acess-token");
+        }
     }
 
     private void configuracoesToolBar() {
@@ -75,6 +74,10 @@ public class PesquisarActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.pesquisar_menu, menu);
+
+        mSearchView = (SearchView) menu.findItem(R.id.menu_seachView).getActionView();
+        mSearchView.setQueryHint("Pesquisar");
+
         return true;
     }
 
@@ -92,6 +95,46 @@ public class PesquisarActivity extends AppCompatActivity {
         // Configurando um dividr entre linhas, para uma melhor visualização.
         mRecyclerView.addItemDecoration(
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+    }
+
+    public void exibirEmpresasDoServidor(String client, String uid, String acess_token,String search) {
+
+        mAPIService.exibirEmpresas(uid,acess_token,client,search).enqueue(new Callback<EnterpriseIndex>() {
+            @Override
+            public void onResponse(Call<EnterpriseIndex> call, Response<EnterpriseIndex> response) {
+//usarFinish no terceiro layout
+                if(response.isSuccessful()) {
+                    exibeRecycleView(response);
+                }else{
+                    Toast.makeText(getApplicationContext(),"Conexão expirou, faça o login novamente!",Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<EnterpriseIndex> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),"Falha na rede", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
+    private void exibeRecycleView(Response<EnterpriseIndex> response) {
+        List<Enterprise> listEnterprises;
+        ArrayList<Empresa> empresas = new ArrayList<Empresa>();
+
+        listEnterprises = response.body().getEnterprises();
+        if (listEnterprises == null){
+            Toast.makeText(getApplicationContext(),"Pesquisa não encontrou resultados",Toast.LENGTH_SHORT).show();
+        }else{
+            //Toast.makeText(getApplicationContext(),response.body().toString(),Toast.LENGTH_SHORT).show();
+            for (Enterprise enterprise :listEnterprises){
+                Empresa empresa = new Empresa(enterprise.getEnterpriseName(),enterprise.getEnterpriseType().getEnterpriseTypeName(),enterprise.getCountry());
+                empresas.add(empresa);
+            }
+            setupRecycler(empresas);
+        }
     }
 
 
