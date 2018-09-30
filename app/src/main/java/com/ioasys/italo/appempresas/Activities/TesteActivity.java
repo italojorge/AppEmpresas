@@ -47,11 +47,11 @@ public class TesteActivity extends AppCompatActivity {
                     //"acess-token"+response.headers().get("acess-token").toString() +
                     //"client"+response.headers().get("client").toString();
                    // resultado.setText("acess_token: "+response.headers().get("access-token").toString());
-                    uid = response.headers().get("uid").toString();
-                    client = response.headers().get("client").toString();
-                    acess_token = response.headers().get("access-token").toString();
+                    uid = "testeapple@ioasys.com.br";
+                    client = "UMB_2kzgXo9D2BvmbOzQNw";
+                    acess_token = "yK4ZwbuNVlhtw4VfXhCn6Q";
 
-                    exibirEmpresas(client,uid,acess_token,"zod");
+                    exibirEmpresas(client,uid,acess_token,"AllRide");
                 } else {
                     resultado.setText("Resposta deu ruim");
                 }
@@ -80,9 +80,11 @@ public class TesteActivity extends AppCompatActivity {
                     if (!lista.isEmpty()){
                         for (Enterprise teste:lista){
 
+
+
                             resultado.setText(
                                   "nome: " + teste.getEnterpriseName() + "\n" +
-                                  "país: " + teste.getCountry()+ "\n" +
+                                  "país: " + teste.getPhoto()+ "\n" +
                                           "negocio: " + teste.getEnterpriseType().getEnterpriseTypeName()
 
                             );

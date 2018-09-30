@@ -3,17 +3,18 @@ package com.ioasys.italo.appempresas.RecycleViewEmpresas;
 import android.widget.ImageView;
 
 public class Empresa {
-  //  private ImageView mEmpresaImagem; //picture?
     private String mNomeEmpresa;
     private String mNegocio;
     private String mLocalidade;
     private String mDescription;
+    private String mUrlImage;
 
-    public Empresa(String mNomeEmpresa, String mNegocio, String mLocalidade, String mDescription) {
+    public Empresa(String mNomeEmpresa, String mNegocio, String mLocalidade, String mDescription, String mUrlImage) {
         this.mNomeEmpresa = mNomeEmpresa;
         this.mNegocio = mNegocio;
         this.mLocalidade = mLocalidade;
         this.mDescription = mDescription;
+        this.mUrlImage = mUrlImage;
     }
 
     public String getmNomeEmpresa() {
@@ -46,6 +47,14 @@ public class Empresa {
 
     public void setmDescription(String mDescription) {
         this.mDescription = mDescription;
+    }
+
+    public String getmUrlImage() {
+        return mUrlImage;
+    }
+
+    public void setmUrlImage(String mUrlImage) {
+        this.mUrlImage = mUrlImage;
     }
 
 }

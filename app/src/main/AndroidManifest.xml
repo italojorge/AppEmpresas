@@ -3,6 +3,7 @@
     package="com.ioasys.italo.appempresas">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -12,18 +13,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activities.LoginActivity">
+
+        </activity>
+        <activity
+            android:name=".Activities.PesquisarActivity"
+            android:label="">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Activities.PesquisarActivity"
-            android:label="">
+        <activity android:name=".Activities.TesteActivity">
 
         </activity>
-        <activity android:name=".Activities.TesteActivity"></activity>
         <activity android:name=".Activities.DetalhesEmpresaActivity"></activity>
     </application>
 

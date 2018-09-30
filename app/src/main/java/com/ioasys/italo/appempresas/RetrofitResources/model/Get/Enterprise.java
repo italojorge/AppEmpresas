@@ -34,7 +34,7 @@ public class Enterprise {
     private Boolean ownEnterprise;
     @SerializedName("photo")
     @Expose
-    private Object photo;
+    private String photo;
     @SerializedName("value")
     @Expose
     private Integer value;
@@ -129,11 +129,11 @@ public class Enterprise {
         this.ownEnterprise = ownEnterprise;
     }
 
-    public Object getPhoto() {
+    public String getPhoto() {
         return photo;
     }
 
-    public void setPhoto(Object photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 

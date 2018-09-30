@@ -89,7 +89,7 @@ public class PesquisarActivity extends AppCompatActivity {
 
         // Adiciona o adapter que irá anexar os objetos à lista.
         // Está sendo criado com lista vazia, pois será preenchida posteriormente.
-        mAdapter = new EmpresaAdapter(empresas);
+        mAdapter = new EmpresaAdapter(empresas, getApplicationContext());
         mRecyclerView.setAdapter(mAdapter);
 
 
@@ -133,7 +133,8 @@ public class PesquisarActivity extends AppCompatActivity {
                 Empresa empresa = new Empresa(enterprise.getEnterpriseName(),
                                             enterprise.getEnterpriseType().getEnterpriseTypeName(),
                                             enterprise.getCountry(),
-                                            enterprise.getDescription());
+                                            enterprise.getDescription(),
+                                            enterprise.getPhoto());
                 empresas.add(empresa);
             }
             setupRecycler(empresas);

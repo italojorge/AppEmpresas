@@ -8,7 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.ioasys.italo.appempresas.Glide.GlideApp;
 
 import com.ioasys.italo.appempresas.Activities.DetalhesEmpresaActivity;
 import com.ioasys.italo.appempresas.R;
@@ -18,8 +21,10 @@ import java.util.ArrayList;
 public class EmpresaAdapter extends RecyclerView.Adapter<EmpresaAdapter.ViewHolderEmpresa>{
 
     private ArrayList<Empresa> mEmpresas;
+    Context mContext;
 
-    public EmpresaAdapter(ArrayList<Empresa> empresas) {
+    public EmpresaAdapter(ArrayList<Empresa> empresas, Context applicationContext) {
+        this.mContext = applicationContext;
         this.mEmpresas = empresas;
     }
 
@@ -30,21 +35,29 @@ public class EmpresaAdapter extends RecyclerView.Adapter<EmpresaAdapter.ViewHold
 
         View view = layoutInflater.inflate(R.layout.layout_listitem, parent, false);
 
-        ViewHolderEmpresa holderEmpresa = new ViewHolderEmpresa(view, parent.getContext());
+        ViewHolderEmpresa holderEmpresa = new ViewHolderEmpresa(view);
 
         return holderEmpresa;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull EmpresaAdapter.ViewHolderEmpresa holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolderEmpresa holder, int position) {
 
             Empresa empresa = mEmpresas.get(position);
-            //holder.empresaImagem.setImageDrawable(empresa.setmEmpresaImagem());
             holder.empresaNome.setText(empresa.getmNomeEmpresa());
             holder.localidade.setText(empresa.getmLocalidade());
-            holder.negocio.setText(empresa.getmNegocio());
+            //holder.negocio.setText(empresa.getmNegocio());
+            holder.negocio.setText(empresa.getmUrlImage());
 
 
+        if (empresa.getmUrlImage() != null) {
+
+                GlideApp.with(mContext)
+                        .load(empresa.getmUrlImage())
+                        //.override(100, 100)
+                        //.placeholder(R.drawable.logo_home)
+                        .into(holder.empresaImagem);
+        }
     }
 
     @Override
@@ -53,14 +66,14 @@ public class EmpresaAdapter extends RecyclerView.Adapter<EmpresaAdapter.ViewHold
     }
 
     public class ViewHolderEmpresa extends RecyclerView.ViewHolder {
-        //ImageView empresaImagem;
+        ImageView empresaImagem;
         TextView empresaNome;
         TextView negocio;
         TextView localidade;
 
-        public ViewHolderEmpresa(View itemView, final Context context) {
+        public ViewHolderEmpresa(View itemView) {
             super(itemView);
-           // empresaImagem = itemView.findViewById(R.id.listItem_empresa_imageView);
+            empresaImagem = itemView.findViewById(R.id.listItem_empresa_imageView);
             empresaNome = itemView.findViewById(R.id.listItem_nomeEmpresa_textView);
             negocio = itemView.findViewById(R.id.listItem_negocio_textView);
             localidade = itemView.findViewById(R.id.listItem_localidade_textView);
@@ -71,11 +84,11 @@ public class EmpresaAdapter extends RecyclerView.Adapter<EmpresaAdapter.ViewHold
 
                     if (mEmpresas.size() > 0){
                         Empresa empresa = mEmpresas.get(getLayoutPosition());
-                        Intent intent = new Intent(context, DetalhesEmpresaActivity.class);
+                        Intent intent = new Intent(mContext, DetalhesEmpresaActivity.class);
                         //intent.putExtra("",""); IMAGEM
                         intent.putExtra("enterprise_name",empresa.getmNomeEmpresa());
                         intent.putExtra("description",empresa.getmDescription());
-                        ((AppCompatActivity)context).startActivity(intent);
+                        mContext.startActivity(intent);
                     }
                 }
             });
