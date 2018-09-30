@@ -3,7 +3,6 @@ package com.ioasys.italo.appempresas.RecycleViewEmpresas;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ioasys.italo.appempresas.Glide.GlideApp;
-
 import com.ioasys.italo.appempresas.Activities.DetalhesEmpresaActivity;
+import com.ioasys.italo.appempresas.Glide.GlideApp;
 import com.ioasys.italo.appempresas.R;
+import com.ioasys.italo.appempresas.RetrofitResources.remote.ApiUtils;
 
 import java.util.ArrayList;
 
-public class EmpresaAdapter extends RecyclerView.Adapter<EmpresaAdapter.ViewHolderEmpresa>{
+public class EmpresaAdapter extends RecyclerView.Adapter<EmpresaAdapter.ViewHolderEmpresa> {
 
     private ArrayList<Empresa> mEmpresas;
     Context mContext;
@@ -43,21 +42,17 @@ public class EmpresaAdapter extends RecyclerView.Adapter<EmpresaAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolderEmpresa holder, int position) {
 
-            Empresa empresa = mEmpresas.get(position);
-            holder.empresaNome.setText(empresa.getmNomeEmpresa());
-            holder.localidade.setText(empresa.getmLocalidade());
-            //holder.negocio.setText(empresa.getmNegocio());
-            holder.negocio.setText(empresa.getmUrlImage());
+        Empresa empresa = mEmpresas.get(position);
+        holder.empresaNome.setText(empresa.getmNomeEmpresa());
+        holder.localidade.setText(empresa.getmLocalidade());
+        holder.negocio.setText(empresa.getmNegocio());
 
+        if (empresa.getmUrlImage() == null) return;
 
-        if (empresa.getmUrlImage() != null) {
+        GlideApp.with(mContext)
+                .load(ApiUtils.BASE_IMAGE + empresa.getmUrlImage())
+                .into(holder.empresaImagem);
 
-                GlideApp.with(mContext)
-                        .load(empresa.getmUrlImage())
-                        //.override(100, 100)
-                        //.placeholder(R.drawable.logo_home)
-                        .into(holder.empresaImagem);
-        }
     }
 
     @Override
@@ -82,14 +77,17 @@ public class EmpresaAdapter extends RecyclerView.Adapter<EmpresaAdapter.ViewHold
                 @Override
                 public void onClick(View v) {
 
-                    if (mEmpresas.size() > 0){
-                        Empresa empresa = mEmpresas.get(getLayoutPosition());
-                        Intent intent = new Intent(mContext, DetalhesEmpresaActivity.class);
-                        //intent.putExtra("",""); IMAGEM
-                        intent.putExtra("enterprise_name",empresa.getmNomeEmpresa());
-                        intent.putExtra("description",empresa.getmDescription());
-                        mContext.startActivity(intent);
+                    if (mEmpresas.size() <= 0) {
+                        return;
                     }
+
+                    Empresa empresa = mEmpresas.get(getLayoutPosition());
+                    Intent intent = new Intent(mContext, DetalhesEmpresaActivity.class);
+                    //intent.putExtra("",""); IMAGEM
+                    intent.putExtra("enterprise_name", empresa.getmNomeEmpresa());
+                    intent.putExtra("description", empresa.getmDescription());
+                    mContext.startActivity(intent);
+
                 }
             });
         }

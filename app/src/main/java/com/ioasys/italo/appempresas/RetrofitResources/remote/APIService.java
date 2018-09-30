@@ -20,5 +20,5 @@ public interface APIService {
     @GET("enterprises")
     Call<EnterpriseIndex> exibirEmpresas(@Header("uid") String uid, @Header("access-token") String access_token
                                         ,@Header("client") String cliente, @Query("name") String search);
-                                //;
+
 }

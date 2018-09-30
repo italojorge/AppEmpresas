@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -30,22 +31,10 @@ public class PesquisarActivity extends AppCompatActivity {
 
     private APIService mAPIService;
     private EmpresaAdapter mAdapter;
-    private String mUid,mClient,mAccess_token, mSeach;
+    private String mUid, mClient, mAccess_token, mSeach;
 
     private RecyclerView mRecyclerView;
     private SearchView mSearchView;
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        //deu bom até aqui
-
-        verificaEmpresasNoServidor("UMB_2kzgXo9D2BvmbOzQNw", "testeapple@ioasys.com.br", "yK4ZwbuNVlhtw4VfXhCn6Q", "");
-        //verificaEmpresasNoServidor(mClient,mUid,mAccess_token,"");
-
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +46,7 @@ public class PesquisarActivity extends AppCompatActivity {
         Bundle tokens = getIntent().getExtras();
         mRecyclerView = findViewById(R.id.activityPesquisar_recycleView);
 
-        if(tokens != null){
+        if (tokens != null) {
             mUid = tokens.getString("uid");
             mClient = tokens.getString("client");
             mAccess_token = tokens.getString("acess-token");
@@ -77,6 +66,22 @@ public class PesquisarActivity extends AppCompatActivity {
 
         mSearchView = (SearchView) menu.findItem(R.id.menu_seachView).getActionView();
         mSearchView.setQueryHint("Pesquisar");
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                mRecyclerView.setVisibility(View.VISIBLE);
+
+                verificaEmpresasNoServidor("UMB_2kzgXo9D2BvmbOzQNw", "testeapple@ioasys.com.br", "yK4ZwbuNVlhtw4VfXhCn6Q", query);
+                //verificaEmpresasNoServidor(mClient,mUid,mAccess_token,"");
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         return true;
     }
@@ -92,7 +97,11 @@ public class PesquisarActivity extends AppCompatActivity {
         mAdapter = new EmpresaAdapter(empresas, getApplicationContext());
         mRecyclerView.setAdapter(mAdapter);
 
-
+        if (mAdapter.getItemCount() == 1)
+            Toast.makeText(getApplicationContext(),mAdapter.getItemCount()+" empresa encontrada",Toast.LENGTH_SHORT).show();
+        else{
+            Toast.makeText(getApplicationContext(),mAdapter.getItemCount()+" empresas encontradas",Toast.LENGTH_SHORT).show();
+        }
         // Configurando um dividr entre linhas, para uma melhor visualização.
         mRecyclerView.addItemDecoration(
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
@@ -101,21 +110,21 @@ public class PesquisarActivity extends AppCompatActivity {
 
     public void verificaEmpresasNoServidor(String client, String uid, String acess_token, String search) {
 
-        mAPIService.exibirEmpresas(uid,acess_token,client,search).enqueue(new Callback<EnterpriseIndex>() {
+        mAPIService.exibirEmpresas(uid, acess_token, client, search).enqueue(new Callback<EnterpriseIndex>() {
             @Override
             public void onResponse(Call<EnterpriseIndex> call, Response<EnterpriseIndex> response) {
 //usarFinish no terceiro layout
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     exibeRecycleView(response);
-                }else{
-                    Toast.makeText(getApplicationContext(),"Conexão expirou, faça o login novamente!",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Conexão expirou, faça o login novamente!", Toast.LENGTH_LONG).show();
                 }
 
             }
 
             @Override
             public void onFailure(Call<EnterpriseIndex> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),"Falha na Rede", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Falha na Rede", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -125,16 +134,16 @@ public class PesquisarActivity extends AppCompatActivity {
         ArrayList<Empresa> empresas = new ArrayList<Empresa>();
 
         listEnterprises = response.body().getEnterprises();
-        if (listEnterprises == null){
-            Toast.makeText(getApplicationContext(),"Pesquisa não encontrou resultados",Toast.LENGTH_SHORT).show();
-        }else{
+        if (listEnterprises == null) {
+            Toast.makeText(getApplicationContext(), "Pesquisa não encontrou resultados", Toast.LENGTH_SHORT).show();
+        } else {
             //Toast.makeText(getApplicationContext(),response.body().toString(),Toast.LENGTH_SHORT).show();
-            for (Enterprise enterprise :listEnterprises){
+            for (Enterprise enterprise : listEnterprises) {
                 Empresa empresa = new Empresa(enterprise.getEnterpriseName(),
-                                            enterprise.getEnterpriseType().getEnterpriseTypeName(),
-                                            enterprise.getCountry(),
-                                            enterprise.getDescription(),
-                                            enterprise.getPhoto());
+                        enterprise.getEnterpriseType().getEnterpriseTypeName(),
+                        enterprise.getCountry(),
+                        enterprise.getDescription(),
+                        enterprise.getPhoto());
                 empresas.add(empresa);
             }
             setupRecycler(empresas);

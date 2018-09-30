@@ -13,16 +13,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activities.LoginActivity">
-
-        </activity>
-        <activity
-            android:name=".Activities.PesquisarActivity"
-            android:label="">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activities.PesquisarActivity"
+            android:label=""
+            android:windowSoftInputMode="adjustPan">
+
+
         </activity>
         <activity android:name=".Activities.TesteActivity">
 
