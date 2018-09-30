@@ -20,7 +20,9 @@
         </activity>
         <activity
             android:name=".Activities.PesquisarActivity"
-            android:label=""></activity>
+            android:label="">
+
+        </activity>
         <activity android:name=".Activities.TesteActivity"></activity>
         <activity android:name=".Activities.DetalhesEmpresaActivity"></activity>
     </application>

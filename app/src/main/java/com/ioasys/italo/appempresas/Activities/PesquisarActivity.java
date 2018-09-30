@@ -41,8 +41,8 @@ public class PesquisarActivity extends AppCompatActivity {
 
         //deu bom até aqui
 
-        //exibirEmpresasDoServidor("UMB_2kzgXo9D2BvmbOzQNw", "testeapple@ioasys.com.br", "yK4ZwbuNVlhtw4VfXhCn6Q", query);
-        exibirEmpresasDoServidor(mClient,mUid,mAccess_token,"Bar");
+        verificaEmpresasNoServidor("UMB_2kzgXo9D2BvmbOzQNw", "testeapple@ioasys.com.br", "yK4ZwbuNVlhtw4VfXhCn6Q", "");
+        //verificaEmpresasNoServidor(mClient,mUid,mAccess_token,"");
 
 
     }
@@ -92,12 +92,14 @@ public class PesquisarActivity extends AppCompatActivity {
         mAdapter = new EmpresaAdapter(empresas);
         mRecyclerView.setAdapter(mAdapter);
 
+
         // Configurando um dividr entre linhas, para uma melhor visualização.
         mRecyclerView.addItemDecoration(
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+
     }
 
-    public void exibirEmpresasDoServidor(String client, String uid, String acess_token,String search) {
+    public void verificaEmpresasNoServidor(String client, String uid, String acess_token, String search) {
 
         mAPIService.exibirEmpresas(uid,acess_token,client,search).enqueue(new Callback<EnterpriseIndex>() {
             @Override
@@ -113,11 +115,9 @@ public class PesquisarActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<EnterpriseIndex> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),"Falha na rede", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Falha na Rede", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
     private void exibeRecycleView(Response<EnterpriseIndex> response) {
@@ -130,7 +130,10 @@ public class PesquisarActivity extends AppCompatActivity {
         }else{
             //Toast.makeText(getApplicationContext(),response.body().toString(),Toast.LENGTH_SHORT).show();
             for (Enterprise enterprise :listEnterprises){
-                Empresa empresa = new Empresa(enterprise.getEnterpriseName(),enterprise.getEnterpriseType().getEnterpriseTypeName(),enterprise.getCountry());
+                Empresa empresa = new Empresa(enterprise.getEnterpriseName(),
+                                            enterprise.getEnterpriseType().getEnterpriseTypeName(),
+                                            enterprise.getCountry(),
+                                            enterprise.getDescription());
                 empresas.add(empresa);
             }
             setupRecycler(empresas);

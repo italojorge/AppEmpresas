@@ -7,44 +7,45 @@ public class Empresa {
     private String mNomeEmpresa;
     private String mNegocio;
     private String mLocalidade;
+    private String mDescription;
 
-    public Empresa(//ImageView mEmpresaImagem,
-                    String mNomeEmpresa, String mNegocio, String mLocalidade) {
-//        this.mEmpresaImagem = mEmpresaImagem;
+    public Empresa(String mNomeEmpresa, String mNegocio, String mLocalidade, String mDescription) {
         this.mNomeEmpresa = mNomeEmpresa;
         this.mNegocio = mNegocio;
         this.mLocalidade = mLocalidade;
+        this.mDescription = mDescription;
     }
 
-    public void setmEmpresaImagem(ImageView mEmpresaImagem) {
-//        this.mEmpresaImagem = mEmpresaImagem;
+    public String getmNomeEmpresa() {
+        return mNomeEmpresa;
     }
 
     public void setmNomeEmpresa(String mNomeEmpresa) {
         this.mNomeEmpresa = mNomeEmpresa;
     }
 
+    public String getmNegocio() {
+        return mNegocio;
+    }
+
     public void setmNegocio(String mNegocio) {
         this.mNegocio = mNegocio;
+    }
+
+    public String getmLocalidade() {
+        return mLocalidade;
     }
 
     public void setmLocalidade(String mLocalidade) {
         this.mLocalidade = mLocalidade;
     }
 
-//    public ImageView getmEmpresaImagem() {
-//        return mEmpresaImagem;
-//    }
-
-    public String getmNomeEmpresa() {
-        return mNomeEmpresa;
+    public String getmDescription() {
+        return mDescription;
     }
 
-    public String getmNegocio() {
-        return mNegocio;
+    public void setmDescription(String mDescription) {
+        this.mDescription = mDescription;
     }
 
-    public String getmLocalidade() {
-        return mLocalidade;
-    }
 }
