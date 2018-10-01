@@ -21,40 +21,20 @@ public class Empresa {
         return mNomeEmpresa;
     }
 
-    public void setmNomeEmpresa(String mNomeEmpresa) {
-        this.mNomeEmpresa = mNomeEmpresa;
-    }
-
     public String getmNegocio() {
         return mNegocio;
-    }
-
-    public void setmNegocio(String mNegocio) {
-        this.mNegocio = mNegocio;
     }
 
     public String getmLocalidade() {
         return mLocalidade;
     }
 
-    public void setmLocalidade(String mLocalidade) {
-        this.mLocalidade = mLocalidade;
-    }
-
     public String getmDescription() {
         return mDescription;
     }
 
-    public void setmDescription(String mDescription) {
-        this.mDescription = mDescription;
-    }
-
     public String getmUrlImage() {
         return mUrlImage;
-    }
-
-    public void setmUrlImage(String mUrlImage) {
-        this.mUrlImage = mUrlImage;
     }
 
 }

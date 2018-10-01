@@ -10,7 +10,7 @@
 
 
     <Button
-        android:id="@+id/loginActivity_entrar_button"
+        android:id="@+id/login_entrar_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
@@ -23,10 +23,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginActivity_senha_editText" />
+        app:layout_constraintTop_toBottomOf="@+id/login_senha_editText" />
 
     <EditText
-        android:id="@+id/loginActivity_senha_editText"
+        android:id="@+id/login_senha_editText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
@@ -35,16 +35,17 @@
         android:drawableLeft="@drawable/ic_cadeado"
         android:ems="10"
         android:hint="Senha"
+        android:imeOptions="actionDone"
         android:inputType="textPassword"
         android:textSize="@dimen/tamanhoTexto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginActivity_email_editText" />
+        app:layout_constraintTop_toBottomOf="@+id/login_email_editText" />
 
 
     <EditText
-        android:id="@+id/loginActivity_email_editText"
+        android:id="@+id/login_email_editText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
@@ -60,10 +61,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginActivity_subtitulo_textView" />
+        app:layout_constraintTop_toBottomOf="@+id/login_subtitulo_textView" />
 
     <TextView
-        android:id="@+id/loginActivity_subtitulo_textView"
+        android:id="@+id/login_subtitulo_textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
@@ -80,10 +81,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginActivity_titulo_textView" />
+        app:layout_constraintTop_toBottomOf="@+id/login_titulo_textView" />
 
     <TextView
-        android:id="@+id/loginActivity_titulo_textView"
+        android:id="@+id/login_titulo_textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -95,13 +96,13 @@
         android:textColor="#383743"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/loginActivity_logomarca_imageView"
+        app:layout_constraintEnd_toEndOf="@+id/login_logomarca_imageView"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/loginActivity_logomarca_imageView"
-        app:layout_constraintTop_toBottomOf="@+id/loginActivity_logomarca_imageView" />
+        app:layout_constraintStart_toStartOf="@+id/login_logomarca_imageView"
+        app:layout_constraintTop_toBottomOf="@+id/login_logomarca_imageView" />
 
     <ImageView
-        android:id="@+id/loginActivity_logomarca_imageView"
+        android:id="@+id/login_logomarca_imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="56dp"
@@ -114,7 +115,7 @@
         app:srcCompat="@drawable/logo_home" />
 
     <TextView
-        android:id="@+id/loginActivity_emailsenhainvalidos_textView"
+        android:id="@+id/login_emailsenhainvalidos_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="88dp"

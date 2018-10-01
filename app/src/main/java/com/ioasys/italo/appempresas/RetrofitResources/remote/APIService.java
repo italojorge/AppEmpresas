@@ -1,7 +1,7 @@
 package com.ioasys.italo.appempresas.RetrofitResources.remote;
 
-import com.ioasys.italo.appempresas.RetrofitResources.model.Get.EnterpriseIndex;
-import com.ioasys.italo.appempresas.RetrofitResources.model.Post.SignIn;
+import com.ioasys.italo.appempresas.RetrofitResources.model.Enterprise.EnterprisesList;
+import com.ioasys.italo.appempresas.RetrofitResources.model.Authentication.SignIn;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -18,7 +18,7 @@ public interface APIService {
                        @Field("password") String password);
 
     @GET("enterprises")
-    Call<EnterpriseIndex> exibirEmpresas(@Header("uid") String uid, @Header("access-token") String access_token
-                                        ,@Header("client") String cliente, @Query("name") String search);
+    Call<EnterprisesList> exibirEmpresas(@Header("uid") String uid, @Header("access-token") String access_token
+                                        , @Header("client") String cliente, @Query("name") String search);
 
 }

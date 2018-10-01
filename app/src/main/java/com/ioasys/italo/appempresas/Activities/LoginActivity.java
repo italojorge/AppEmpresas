@@ -1,16 +1,18 @@
 package com.ioasys.italo.appempresas.Activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ioasys.italo.appempresas.R;
-import com.ioasys.italo.appempresas.RetrofitResources.model.Post.SignIn;
+import com.ioasys.italo.appempresas.RetrofitResources.model.Authentication.SignIn;
 import com.ioasys.italo.appempresas.RetrofitResources.remote.APIService;
 import com.ioasys.italo.appempresas.RetrofitResources.remote.ApiUtils;
 
@@ -41,13 +43,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 usuarioOuSenhaInvalidos.setVisibility(View.INVISIBLE);
+
                 String emailDigitado = email.getText().toString();
                 String senhaDigitada = senha.getText().toString();
 
                 validaSenha(senhaDigitada);
 
-                if (validaEmail(emailDigitado)){
-                    logar(emailDigitado,senhaDigitada);
+                if (validaEmail(emailDigitado)) {
+                    logar(emailDigitado, senhaDigitada);
                 }
             }
         });
@@ -55,11 +58,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean validaEmail(String emailDigitado) {
-        if(emailDigitado.isEmpty()){
+        if (emailDigitado.isEmpty()) {
             email.setError("Campo de email está vazio");
         } else {
 
-            if(isEmail(emailDigitado)){
+            if (isEmail(emailDigitado)) {
                 return true;
             } else {
                 email.setError("Digite um endereço de email válido");
@@ -69,16 +72,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void validaSenha(String senhaDigitada) {
-        if(senhaDigitada.isEmpty()){
+        if (senhaDigitada.isEmpty()) {
             senha.setError("Campo de senha está vazio");
         }
     }
 
     private void encontrandoViewsPorId() {
-        entrar = findViewById(R.id.loginActivity_entrar_button);
-        email = findViewById(R.id.loginActivity_email_editText);
-        senha = findViewById(R.id.loginActivity_senha_editText);
-        usuarioOuSenhaInvalidos = findViewById(R.id.loginActivity_emailsenhainvalidos_textView);
+        entrar = findViewById(R.id.login_entrar_button);
+        email = findViewById(R.id.login_email_editText);
+        senha = findViewById(R.id.login_senha_editText);
+        usuarioOuSenhaInvalidos = findViewById(R.id.login_emailsenhainvalidos_textView);
     }
 
     private boolean isEmail(String email) {
@@ -93,16 +96,16 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<SignIn> call, Response<SignIn> response) {
 
-                if(response.isSuccessful()) {
-                    String uid,client,acess_token;
+                if (response.isSuccessful()) {
+                    String uid, client, access_token;
                     uid = response.headers().get("uid").toString();
                     client = response.headers().get("client").toString();
-                    acess_token = response.headers().get("access-token").toString();
+                    access_token = response.headers().get("access-token").toString();
 
-                    Intent intent = new Intent(getApplicationContext(),PesquisarActivity.class);
-                    intent.putExtra("uid",response.headers().get("uid").toString());
-                    intent.putExtra("client",response.headers().get("client").toString());
-                    intent.putExtra("acess-token",response.headers().get("access-token").toString());
+                    Intent intent = new Intent(getApplicationContext(), PesquisarActivity.class);
+                    intent.putExtra("uid", uid);
+                    intent.putExtra("client", client);
+                    intent.putExtra("acess-token", access_token);
                     startActivity(intent);
                 } else {
                     usuarioOuSenhaInvalidos.setVisibility(View.VISIBLE);
@@ -111,11 +114,10 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<SignIn> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),"Falha na Rede",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Falha na Rede", Toast.LENGTH_LONG).show();
             }
         });
     }
-
 
 
 }

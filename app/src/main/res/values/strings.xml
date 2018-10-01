@@ -1,6 +1,4 @@
 <resources>
     <string name="app_name">App Empresas</string>
-    <string name="title_activity_main2">Main2Activity</string>
-    <string name="title_activity_pesquisar">PesquisarActivity</string>
     <string name="usuario_senha_incorretos">Usuário e/ou senha inválidos</string>
 </resources>

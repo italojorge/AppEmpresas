@@ -84,6 +84,7 @@ public class EmpresaAdapter extends RecyclerView.Adapter<EmpresaAdapter.ViewHold
                     Empresa empresa = mEmpresas.get(getLayoutPosition());
                     Intent intent = new Intent(mContext, DetalhesEmpresaActivity.class);
                     //intent.putExtra("",""); IMAGEM
+                    intent.putExtra("image", empresa.getmUrlImage());
                     intent.putExtra("enterprise_name", empresa.getmNomeEmpresa());
                     intent.putExtra("description", empresa.getmDescription());
                     mContext.startActivity(intent);

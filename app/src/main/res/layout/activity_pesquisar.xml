@@ -5,12 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/corFundoApp"
-    tools:context=".Activities.PesquisarActivity"
-    android:id="@+id/layoutRecycleView"
-    >
+    tools:context=".Activities.PesquisarActivity">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/wld_toolbar"
+        android:id="@+id/pesquisar_toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#ee4c77"
@@ -26,7 +24,7 @@
 
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/pesquisar_pesquiseAcima_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
@@ -41,14 +39,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wld_toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/pesquisar_toolbar"
         app:layout_constraintVertical_bias="0.451" />
 
     <android.support.v7.widget.RecyclerView
 
-        android:id="@+id/activityPesquisar_recycleView"
+        android:id="@+id/pesquisar_recycleView"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -56,11 +54,13 @@
         android:background="@android:color/background_light"
         android:scrollbars="vertical"
         android:visibility="invisible"
+        app:layout_constrainedHeight="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wld_toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/pesquisar_toolbar"
+        app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/layout_listitem">
 
 
