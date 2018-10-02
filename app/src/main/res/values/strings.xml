@@ -12,4 +12,5 @@
     <string name="empresa_titulo">Empresa1</string>
     <string name="empresa_negocio">Negócio</string>
     <string name="empresa_localizacao">Brasil</string>
+    <string name="pesquisar">Pesquisar</string>
 </resources>
