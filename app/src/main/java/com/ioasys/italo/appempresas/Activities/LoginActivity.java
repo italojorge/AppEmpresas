@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,10 +22,10 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Button entrar;
-    private EditText email;
-    private EditText senha;
-    private TextView usuarioOuSenhaInvalidos;
+    private Button mEntrar;
+    private EditText mEmail;
+    private EditText mSenha;
+    private TextView mUsuarioOuSenhaInvalidos;
     private APIService mAPIService;
 
     @Override
@@ -39,17 +37,15 @@ public class LoginActivity extends AppCompatActivity {
 
         mAPIService = ApiUtils.getAPIService();
 
-        entrar.setOnClickListener(new View.OnClickListener() {
+        mEntrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                usuarioOuSenhaInvalidos.setVisibility(View.INVISIBLE);
+                mUsuarioOuSenhaInvalidos.setVisibility(View.INVISIBLE);
 
-                String emailDigitado = email.getText().toString();
-                String senhaDigitada = senha.getText().toString();
+                String emailDigitado = mEmail.getText().toString();
+                String senhaDigitada = mSenha.getText().toString();
 
-                validaSenha(senhaDigitada);
-
-                if (validaEmail(emailDigitado)) {
+                if (emailValido(emailDigitado) & senhaValida(senhaDigitada)) {
                     logar(emailDigitado, senhaDigitada);
                 }
             }
@@ -57,41 +53,43 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private boolean validaEmail(String emailDigitado) {
+    public boolean emailValido(String emailDigitado) {
         if (emailDigitado.isEmpty()) {
-            email.setError("Campo de email está vazio");
+            mEmail.setError("Campo de email está vazio");
         } else {
 
             if (isEmail(emailDigitado)) {
                 return true;
             } else {
-                email.setError("Digite um endereço de email válido");
+                mEmail.setError("Digite um endereço de email válido");
             }
         }
         return false;
     }
 
-    private void validaSenha(String senhaDigitada) {
+    public boolean senhaValida(String senhaDigitada) { //caso senha seja esteja vazia, exibe erro
         if (senhaDigitada.isEmpty()) {
-            senha.setError("Campo de senha está vazio");
+            mSenha.setError("Campo de senha está vazio");
+            return false;
         }
+        return true;
     }
 
-    private void encontrandoViewsPorId() {
-        entrar = findViewById(R.id.login_entrar_button);
-        email = findViewById(R.id.login_email_editText);
-        senha = findViewById(R.id.login_senha_editText);
-        usuarioOuSenhaInvalidos = findViewById(R.id.login_emailsenhainvalidos_textView);
+    public void encontrandoViewsPorId() { //linka os botoes da activity com os do xml
+        mEntrar = findViewById(R.id.login_entrar_button);
+        mEmail = findViewById(R.id.login_email_editText);
+        mSenha = findViewById(R.id.login_senha_editText);
+        mUsuarioOuSenhaInvalidos = findViewById(R.id.login_emailsenhainvalidos_textView);
     }
 
-    private boolean isEmail(String email) {
+    public boolean isEmail(String email) { //verifica email atraves de expressao regular
         String REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         Pattern pattern = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE);
         return pattern.matcher(email).find();
     }
 
-    public void logar(String email, String senha) {
+    public void logar(String email, String senha) { //verifica login e senha do usuario no servidor
         mAPIService.logar(email, senha).enqueue(new Callback<SignIn>() {
             @Override
             public void onResponse(Call<SignIn> call, Response<SignIn> response) {
@@ -103,12 +101,11 @@ public class LoginActivity extends AppCompatActivity {
                     access_token = response.headers().get("access-token").toString();
 
                     Intent intent = new Intent(getApplicationContext(), PesquisarActivity.class);
-                    intent.putExtra("uid", uid);
-                    intent.putExtra("client", client);
-                    intent.putExtra("acess-token", access_token);
+                    enviaTokensParaActivity(uid, client, access_token, intent);
                     startActivity(intent);
                 } else {
-                    usuarioOuSenhaInvalidos.setVisibility(View.VISIBLE);
+                    //texto exibindo: Usuario e/ou senha inválidos
+                    mUsuarioOuSenhaInvalidos.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -117,6 +114,12 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Falha na Rede", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    public void enviaTokensParaActivity(String uid, String client, String access_token, Intent intent) {
+        intent.putExtra("uid", uid);
+        intent.putExtra("client", client);
+        intent.putExtra("access-token", access_token);
     }
 
 
