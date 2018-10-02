@@ -5,15 +5,15 @@ import com.google.gson.annotations.SerializedName;
 
 public class EnterpriseType {
 
-@SerializedName("id")
-@Expose
-private Integer id;
-@SerializedName("enterprise_type_name")
-@Expose
-private String enterpriseTypeName;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+    @SerializedName("enterprise_type_name")
+    @Expose
+    private String enterpriseTypeName;
 
     public String getEnterpriseTypeName() {
-    return enterpriseTypeName;
-}
+        return enterpriseTypeName;
+    }
 
 }
