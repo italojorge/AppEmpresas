@@ -35,7 +35,7 @@ public class PesquisarActivity extends AppCompatActivity {
     private String mUid;
     private String mClient;
     private String mAccess_token;
-
+    private ArrayList<Empresa> empresas;
     private RecyclerView mRecyclerView;
     private SearchView mSearchView;
     private Toolbar mToolbar;
@@ -46,22 +46,26 @@ public class PesquisarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pesquisar);
 
+        encontrandoViewsPorId();
         configuracoesToolBar();
-        mAPIService = ApiUtils.getAPIService();
-        Bundle tokens = getIntent().getExtras();
 
-        mRecyclerView = findViewById(R.id.pesquisar_recycleView);
-        mPesquiseAcima = findViewById(R.id.pesquisar_pesquiseAcima_TextView);
+        mAPIService = ApiUtils.getAPIService();
+        Bundle tokens = getIntent().getExtras(); //recupera tokens da LoginActivity
 
         if (tokens != null) {
             mUid = tokens.getString("uid");
             mClient = tokens.getString("client");
-            mAccess_token = tokens.getString("acess-token");
+            mAccess_token = tokens.getString("access-token");
         }
     }
 
-    private void configuracoesToolBar() {
+    public void encontrandoViewsPorId() {
+        mRecyclerView = findViewById(R.id.pesquisar_recycleView);
+        mPesquiseAcima = findViewById(R.id.pesquisar_pesquiseAcima_TextView);
         mToolbar = findViewById(R.id.pesquisar_toolbar);
+    }
+
+    public void configuracoesToolBar() {
         setSupportActionBar(mToolbar);
     }
 
@@ -78,8 +82,7 @@ public class PesquisarActivity extends AppCompatActivity {
                 mRecyclerView.setVisibility(View.VISIBLE);
                 mPesquiseAcima.setVisibility(View.INVISIBLE);
 
-                //verificaConexaoComServidor("UMB_2kzgXo9D2BvmbOzQNw", "testeapple@ioasys.com.br", "yK4ZwbuNVlhtw4VfXhCn6Q", query);
-                verificaConexaoComServidor(mClient, mUid, mAccess_token, query);
+                verificaEmpresaNoServidor(mClient, mUid, mAccess_token, query);
 
                 return true;
             }
@@ -93,31 +96,30 @@ public class PesquisarActivity extends AppCompatActivity {
         return true;
     }
 
-    private void ExibeRecycleView(ArrayList<Empresa> empresas) {
+    public void ExibeRecycleView(ArrayList<Empresa> empresas) {
 
-        // Configurando o gerenciador de layout para ser uma lista.
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setNestedScrollingEnabled(false);
 
-        // Adiciona o adapter que irá anexar os objetos à lista.
-        // Está sendo criado com lista vazia, pois será preenchida posteriormente.
         mAdapter = new EmpresaAdapter(empresas, getApplicationContext());
         mRecyclerView.setAdapter(mAdapter);
 
-        // Configurando um dividr entre linhas, para uma melhor visualização.
+        // Adicionando um divisor entre linhas, para uma melhor visualizacao.
         mRecyclerView.addItemDecoration(
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
     }
 
-    public void verificaConexaoComServidor(String client, String uid, String acess_token, String search) {
+    public void verificaEmpresaNoServidor(String client, String uid, String acess_token, String search) {
 
         mAPIService.exibirEmpresas(uid, acess_token, client, search).enqueue(new Callback<EnterprisesList>() {
             @Override
             public void onResponse(Call<EnterprisesList> call, Response<EnterprisesList> response) {
                 if (response.isSuccessful()) {
                     RecebeEmpresasDoServidor(response);
+                    ExibeRecycleView(empresas);
+                    toastQuantidadeEmpresas(); //exibe um toast com a quantidade de empresas encontradas com a pesquisa
                 } else {
                     Toast.makeText(getApplicationContext(), "Conexão expirou, faça o login novamente!", Toast.LENGTH_LONG).show();
                 }
@@ -131,16 +133,16 @@ public class PesquisarActivity extends AppCompatActivity {
         });
     }
 
-    private void RecebeEmpresasDoServidor(Response<EnterprisesList> response) {
+    //metodo responsavel por recuperar apenas as informacoes das empresas necessarias para exibicao
+    public void RecebeEmpresasDoServidor(Response<EnterprisesList> response) {
         List<Enterprise> listEnterprises;
-        ArrayList<Empresa> empresas = new ArrayList<Empresa>();
+        empresas = new ArrayList<Empresa>();
 
         listEnterprises = response.body().getEnterprises();
         if (listEnterprises == null) {
             Toast.makeText(getApplicationContext(), "Pesquisa não encontrou resultados", Toast.LENGTH_SHORT).show();
             return;
         }
-        //Toast.makeText(getApplicationContext(),response.body().toString(),Toast.LENGTH_SHORT).show();
         for (Enterprise enterprise : listEnterprises) {
             Empresa empresa = new Empresa(enterprise.getEnterpriseName(),
                     enterprise.getEnterpriseType().getEnterpriseTypeName(),
@@ -149,11 +151,9 @@ public class PesquisarActivity extends AppCompatActivity {
                     enterprise.getPhoto());
             empresas.add(empresa);
         }
-        ExibeRecycleView(empresas);
-        toastQuantidadeEmpresas();
     }
 
-    public void toastQuantidadeEmpresas() {
+    public void toastQuantidadeEmpresas() { //exibe quantidade de empresas encontradas de acordo com a pesquisa
         if (mAdapter.getItemCount() == 1) {
             Toast.makeText(getApplicationContext(), mAdapter.getItemCount() + " empresa encontrada", Toast.LENGTH_SHORT).show();
         } else if (mAdapter.getItemCount() == 0) {
