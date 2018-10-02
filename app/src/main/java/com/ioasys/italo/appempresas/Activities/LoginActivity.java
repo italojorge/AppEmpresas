@@ -83,8 +83,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public boolean isEmail(String email) { //verifica email atraves de expressao regular
-        String REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        String REGEX = getString(R.string.verificacaoEmail);
         Pattern pattern = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE);
         return pattern.matcher(email).find();
     }
@@ -96,11 +95,11 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (response.isSuccessful()) {
                     String uid, client, access_token;
-                    uid = response.headers().get("uid").toString();
-                    client = response.headers().get("client").toString();
-                    access_token = response.headers().get("access-token").toString();
+                    uid = response.headers().get("uid");
+                    client = response.headers().get("client");
+                    access_token = response.headers().get("access-token");
 
-                    Intent intent = new Intent(getApplicationContext(), PesquisarActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, PesquisarActivity.class);
                     enviaTokensParaActivity(uid, client, access_token, intent);
                     startActivity(intent);
                 } else {

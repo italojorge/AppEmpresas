@@ -17,7 +17,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="36dp"
         android:background="@drawable/botaoarredondado"
-        android:text="Entrar"
+        android:text="@string/botao_entrar"
         android:textColor="@android:color/background_light"
         android:textSize="@dimen/tamanhoTexto"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +32,7 @@
         android:layout_marginEnd="30dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="18dp"
-        android:drawableLeft="@drawable/ic_cadeado"
+        android:drawableStart="@drawable/ic_cadeado"
         android:ems="10"
         android:hint="@string/hint_senha"
         android:imeOptions="actionDone"
@@ -51,7 +51,7 @@
         android:layout_marginEnd="30dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="40dp"
-        android:drawableLeft="@drawable/ic_email"
+        android:drawableStart="@drawable/ic_email"
         android:ems="10"
         android:hint="@string/hint_email"
         android:inputType="textEmailAddress"
@@ -110,7 +110,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo_home" />
+        app:srcCompat="@drawable/logo_home"
+        android:contentDescription="@string/todo" />
 
     <TextView
         android:id="@+id/login_emailsenhainvalidos_textView"

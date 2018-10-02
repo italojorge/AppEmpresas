@@ -29,14 +29,12 @@ public class EmpresaAdapter extends RecyclerView.Adapter<EmpresaAdapter.ViewHold
 
     @NonNull
     @Override
-    public EmpresaAdapter.ViewHolderEmpresa onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolderEmpresa onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
 
         View view = layoutInflater.inflate(R.layout.layout_listitem, parent, false);
 
-        ViewHolderEmpresa holderEmpresa = new ViewHolderEmpresa(view);
-
-        return holderEmpresa;
+        return new ViewHolderEmpresa(view);
     }
 
     @Override
@@ -59,13 +57,13 @@ public class EmpresaAdapter extends RecyclerView.Adapter<EmpresaAdapter.ViewHold
         return mEmpresas != null ? mEmpresas.size() : 0;
     }
 
-    public class ViewHolderEmpresa extends RecyclerView.ViewHolder {
+    class ViewHolderEmpresa extends RecyclerView.ViewHolder {
         ImageView empresaImagem;
         TextView empresaNome;
         TextView negocio;
         TextView localidade;
 
-        public ViewHolderEmpresa(View itemView) {
+        ViewHolderEmpresa(final View itemView) {
             super(itemView);
             empresaImagem = itemView.findViewById(R.id.listItem_empresa_imageView);
             empresaNome = itemView.findViewById(R.id.listItem_nomeEmpresa_textView);
@@ -89,7 +87,7 @@ public class EmpresaAdapter extends RecyclerView.Adapter<EmpresaAdapter.ViewHold
             });
         }
 
-        public void enviaDadosEmpresaClicada(Empresa empresa, Intent intent) { //envia dados para DetalhesEmpresaActivity
+        private void enviaDadosEmpresaClicada(Empresa empresa, Intent intent) { //envia dados para DetalhesEmpresaActivity
             intent.putExtra("image", empresa.getmUrlImage());
             intent.putExtra("enterprise_name", empresa.getmNomeEmpresa());
             intent.putExtra("description", empresa.getmDescription());

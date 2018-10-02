@@ -17,7 +17,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_report_image"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:contentDescription="@string/todo" />
 
     <TextView
         android:id="@+id/listItem_nomeEmpresa_textView"
@@ -25,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Empresa1"
+        android:text="@string/empresa_titulo"
         android:textColor="#1a0e49"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/listItem_empresa_imageView"
@@ -36,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Negócio"
+        android:text="@string/empresa_negocio"
         android:textColor="#8d8c8c"
         android:textStyle="italic"
         app:layout_constraintStart_toStartOf="@+id/listItem_nomeEmpresa_textView"
@@ -47,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Brasil"
+        android:text="@string/empresa_localizacao"
         android:textColor="#8d8c8c"
         app:layout_constraintStart_toStartOf="@+id/listItem_nomeEmpresa_textView"
         app:layout_constraintTop_toBottomOf="@+id/listItem_negocio_textView" />

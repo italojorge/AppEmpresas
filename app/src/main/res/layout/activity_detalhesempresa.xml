@@ -19,7 +19,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detalhesempresa_toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/detalhesempresa_toolbar"
+        android:contentDescription="@string/todo" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/detalhesempresa_toolbar"
@@ -58,7 +59,7 @@
                 android:id="@+id/detalhesEmpresa_descricao_textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text=""
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="217dp" />
         </LinearLayout>

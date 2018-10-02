@@ -37,7 +37,6 @@ public class PesquisarActivity extends AppCompatActivity {
     private String mAccess_token;
     private ArrayList<Empresa> empresas;
     private RecyclerView mRecyclerView;
-    private SearchView mSearchView;
     private Toolbar mToolbar;
     private TextView mPesquiseAcima;
 
@@ -74,7 +73,7 @@ public class PesquisarActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.pesquisar_menu, menu);
 
-        mSearchView = (SearchView) menu.findItem(R.id.menu_seachView).getActionView();
+        SearchView mSearchView = (SearchView) menu.findItem(R.id.menu_seachView).getActionView();
         mSearchView.setQueryHint("Pesquisar");
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -102,7 +101,7 @@ public class PesquisarActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setNestedScrollingEnabled(false);
 
-        mAdapter = new EmpresaAdapter(empresas, getApplicationContext());
+        mAdapter = new EmpresaAdapter(empresas, this);
         mRecyclerView.setAdapter(mAdapter);
 
         // Adicionando um divisor entre linhas, para uma melhor visualizacao.
@@ -136,7 +135,7 @@ public class PesquisarActivity extends AppCompatActivity {
     //metodo responsavel por recuperar apenas as informacoes das empresas necessarias para exibicao
     public void RecebeEmpresasDoServidor(Response<EnterprisesList> response) {
         List<Enterprise> listEnterprises;
-        empresas = new ArrayList<Empresa>();
+        empresas = new ArrayList<>();
 
         listEnterprises = response.body().getEnterprises();
         if (listEnterprises == null) {
