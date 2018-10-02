@@ -12,8 +12,19 @@ public class EnterpriseType {
     @Expose
     private String enterpriseTypeName;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getEnterpriseTypeName() {
         return enterpriseTypeName;
     }
 
+    public void setEnterpriseTypeName(String enterpriseTypeName) {
+        this.enterpriseTypeName = enterpriseTypeName;
+    }
 }

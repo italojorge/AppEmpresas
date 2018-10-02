@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class EmpresaAdapter extends RecyclerView.Adapter<EmpresaAdapter.ViewHolderEmpresa> {
 
     private ArrayList<Empresa> mEmpresas;
-    Context mContext;
+    private Context mContext;
 
     public EmpresaAdapter(ArrayList<Empresa> empresas, Context applicationContext) {
         this.mContext = applicationContext;
@@ -47,10 +47,9 @@ public class EmpresaAdapter extends RecyclerView.Adapter<EmpresaAdapter.ViewHold
         holder.localidade.setText(empresa.getmLocalidade());
         holder.negocio.setText(empresa.getmNegocio());
 
-        if (empresa.getmUrlImage() == null) return;
-
         GlideApp.with(mContext)
                 .load(ApiUtils.BASE_IMAGE + empresa.getmUrlImage())
+                .placeholder(mContext.getDrawable(android.R.drawable.ic_menu_report_image))
                 .into(holder.empresaImagem);
 
     }
@@ -77,20 +76,23 @@ public class EmpresaAdapter extends RecyclerView.Adapter<EmpresaAdapter.ViewHold
                 @Override
                 public void onClick(View v) {
 
-                    if (mEmpresas.size() <= 0) {
+                    if (mEmpresas.size() == 0) {
                         return;
                     }
 
                     Empresa empresa = mEmpresas.get(getLayoutPosition());
                     Intent intent = new Intent(mContext, DetalhesEmpresaActivity.class);
-                    //intent.putExtra("",""); IMAGEM
-                    intent.putExtra("image", empresa.getmUrlImage());
-                    intent.putExtra("enterprise_name", empresa.getmNomeEmpresa());
-                    intent.putExtra("description", empresa.getmDescription());
+                    enviaDadosEmpresaClicada(empresa, intent);
                     mContext.startActivity(intent);
 
                 }
             });
+        }
+
+        public void enviaDadosEmpresaClicada(Empresa empresa, Intent intent) { //envia dados para DetalhesEmpresaActivity
+            intent.putExtra("image", empresa.getmUrlImage());
+            intent.putExtra("enterprise_name", empresa.getmNomeEmpresa());
+            intent.putExtra("description", empresa.getmDescription());
         }
     }
 }

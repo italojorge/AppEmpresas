@@ -1,7 +1,5 @@
 package com.ioasys.italo.appempresas.RecycleViewEmpresas;
 
-import android.widget.ImageView;
-
 public class Empresa {
     private String mNomeEmpresa;
     private String mNegocio;

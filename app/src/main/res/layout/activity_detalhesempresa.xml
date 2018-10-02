@@ -55,7 +55,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/detalhesEmpresaActivity_descricao_textView"
+                android:id="@+id/detalhesEmpresa_descricao_textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"

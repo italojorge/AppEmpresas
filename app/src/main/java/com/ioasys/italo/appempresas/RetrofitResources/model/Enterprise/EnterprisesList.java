@@ -2,8 +2,8 @@ package com.ioasys.italo.appempresas.RetrofitResources.model.Enterprise;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import java.util.List;
 
+import java.util.List;
 
 public class EnterprisesList {
 
@@ -13,6 +13,10 @@ public class EnterprisesList {
 
     public List<Enterprise> getEnterprises() {
         return enterprises;
+    }
+
+    public void setEnterprises(List<Enterprise> enterprises) {
+        this.enterprises = enterprises;
     }
 
 }

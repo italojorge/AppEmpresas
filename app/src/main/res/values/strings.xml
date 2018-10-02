@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">App Empresas</string>
     <string name="usuario_senha_incorretos">Usuário e/ou senha inválidos</string>
+    <string name="pesquise_acima">Clique na busca para iniciar.</string>
+    <string name="bem_vindo">BEM-VINDO AO EMPRESAS</string>
+    <string name="loren">Lorem ipsum dolor sit amet, contetur adipiscing elit. Nunc accumsan.</string>
+    <string name="hint_email">E-mail</string>
+    <string name="hint_senha">Senha</string>
 </resources>

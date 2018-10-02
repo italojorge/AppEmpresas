@@ -1,7 +1,7 @@
 package com.ioasys.italo.appempresas.Activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,33 +23,37 @@ public class DetalhesEmpresaActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
 
-        mDescricao = findViewById(R.id.detalhesEmpresaActivity_descricao_textView);
-        mImagem = findViewById(R.id.detalhesempresa_imagem_imageView);
-        toolbar = findViewById(R.id.detalhesempresa_toolbar);
-
-        mDescricao.setText(bundle.getString("description"));
+        encontrandoViewsPorId();
 
         configuracoesToolBar(bundle);
 
-        if (bundle.getString("image") == null) return;
+        //exibe a descrição da empresa clicada
+        mDescricao.setText(bundle.getString("description"));
 
         GlideApp.with(getApplicationContext())
                 .load(ApiUtils.BASE_IMAGE + bundle.getString("image"))
+                .placeholder(getDrawable(android.R.drawable.ic_menu_report_image))
                 .into(mImagem);
 
     }
 
-    //altera titulo da Toolbar de acordo com nome da empresa e add botao voltar
-    private void configuracoesToolBar(Bundle bundle) {
+    public void encontrandoViewsPorId() {
+        mDescricao = findViewById(R.id.detalhesEmpresa_descricao_textView);
+        mImagem = findViewById(R.id.detalhesempresa_imagem_imageView);
+        toolbar = findViewById(R.id.detalhesempresa_toolbar);
+    }
+
+    //altera titulo da Toolbar de acordo com nome da empresa e adiciona botao voltar
+    public void configuracoesToolBar(Bundle bundle) {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(bundle.getString("enterprise_name"));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //adicionando botão voltar
+        getSupportActionBar().setDisplayShowHomeEnabled(true); //exibindo botão voltar
 
     }
 
-    //finaliza a activity ao pressionar botao voltar
+    //finaliza a atual activity ao pressionar botao voltar
     @Override
     public boolean onSupportNavigateUp() {
         finish();
