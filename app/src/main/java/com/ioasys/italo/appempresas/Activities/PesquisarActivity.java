@@ -29,7 +29,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PesquisarActivity extends AppCompatActivity {
-
     private APIService mAPIService;
     private EmpresaAdapter mAdapter;
     private String mUid;
@@ -80,7 +79,6 @@ public class PesquisarActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 mRecyclerView.setVisibility(View.VISIBLE);
                 mPesquiseAcima.setVisibility(View.INVISIBLE);
-
                 verificaEmpresaNoServidor(mClient, mUid, mAccess_token, query);
 
                 return true;
@@ -96,7 +94,6 @@ public class PesquisarActivity extends AppCompatActivity {
     }
 
     public void ExibeRecycleView(ArrayList<Empresa> empresas) {
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setNestedScrollingEnabled(false);
@@ -111,7 +108,6 @@ public class PesquisarActivity extends AppCompatActivity {
     }
 
     public void verificaEmpresaNoServidor(String client, String uid, String acess_token, String search) {
-
         mAPIService.exibirEmpresas(uid, acess_token, client, search).enqueue(new Callback<EnterprisesList>() {
             @Override
             public void onResponse(Call<EnterprisesList> call, Response<EnterprisesList> response) {
@@ -122,7 +118,6 @@ public class PesquisarActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), "Conexão expirou, faça o login novamente!", Toast.LENGTH_LONG).show();
                 }
-
             }
 
             @Override

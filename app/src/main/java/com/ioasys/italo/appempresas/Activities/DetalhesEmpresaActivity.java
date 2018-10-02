@@ -12,7 +12,6 @@ import com.ioasys.italo.appempresas.R;
 import com.ioasys.italo.appempresas.RetrofitResources.remote.ApiUtils;
 
 public class DetalhesEmpresaActivity extends AppCompatActivity {
-
     private TextView mDescricao;
     private ImageView mImagem;
     private Toolbar toolbar;

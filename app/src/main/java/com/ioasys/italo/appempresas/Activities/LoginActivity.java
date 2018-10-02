@@ -21,7 +21,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
-
     private Button mEntrar;
     private EditText mEmail;
     private EditText mSenha;
@@ -120,6 +119,4 @@ public class LoginActivity extends AppCompatActivity {
         intent.putExtra("client", client);
         intent.putExtra("access-token", access_token);
     }
-
-
 }
